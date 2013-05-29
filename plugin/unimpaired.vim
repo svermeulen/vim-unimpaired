@@ -32,7 +32,7 @@ endfunction
 call s:MapNextFamily('a','')
 call s:MapNextFamily('u','b')
 call s:MapNextFamily('l','l')
-call s:MapNextFamily('d','t')
+"call s:MapNextFamily('d','t')
 
 function! s:entries(path)
   let path = substitute(a:path,'[\\/]$','','')
