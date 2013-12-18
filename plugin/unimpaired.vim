@@ -128,16 +128,37 @@ nmap [<Space> <Plug>unimpairedBlankUp
 nmap ]<Space> <Plug>unimpairedBlankDown
 
 function! s:Move(cmd, count, map) abort
-  normal! m`
+  normal! mz
   exe 'move'.a:cmd.a:count
-  norm! ``
+  keepjumps normal! `z
+  normal! ==
   silent! call repeat#set("\<Plug>unimpairedMove".a:map, a:count)
+endfunction
+
+function! s:MoveVisualMode(count)
+    let oldYank = easyclip#GetCurrentYank()
+    normal! gvygv"_d
+    normal! k
+    exec "normal \<plug>EasyClipPasteBefore"
+    normal! `]m>
+    normal! `[m<
+    call easyclip#SetCurrentYank(oldYank)
+
+    let fullPlugName = "\<plug>VisualModeUnimpairedMoveUp"
+    silent! call repeat#set(fullPlugName, a:count)
 endfunction
 
 nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
 nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
-xnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move--'.v:count1<CR>``
-xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>exe 'exe "normal! m`"<Bar>''<,''>move''>+'.v:count1<CR>``
+
+nnoremap <silent> <Plug>VisualModeUnimpairedMoveUp   :call <SID>MoveVisualMode(v:count1)<CR>
+
+xmap <silent> <Plug>unimpairedMoveUp <esc><Plug>VisualModeUnimpairedMoveUp
+
+"xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>MoveVisualMode()<CR>
+
+"xnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>exe 'exe "normal! mz"<Bar>''<,''>move--'.v:count1<CR>`z
+"xnoremap <silent> <Plug>unimpairedMoveDown :<C-U>exe 'exe "normal! mz"<Bar>''<,''>move''>+'.v:count1<CR>`z
 
 nmap [e <Plug>unimpairedMoveUp
 nmap ]e <Plug>unimpairedMoveDown
