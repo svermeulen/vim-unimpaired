@@ -136,13 +136,13 @@ function! s:Move(cmd, count, map) abort
 endfunction
 
 function! s:MoveVisualMode(count)
-    let oldYank = easyclip#GetCurrentYank()
+    let oldYank = EasyClip#GetCurrentYank()
     normal! gvygv"_d
     normal! k
     exec "normal \<plug>EasyClipPasteBefore"
     normal! `]m>
     normal! `[m<
-    call easyclip#SetCurrentYank(oldYank)
+    call EasyClip#SetCurrentYank(oldYank)
 
     let fullPlugName = "\<plug>VisualModeUnimpairedMoveUp"
     silent! call repeat#set(fullPlugName, a:count)
