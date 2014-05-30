@@ -29,9 +29,9 @@ function! s:MapNextFamily(map,cmd)
   endif
 endfunction
 
-call s:MapNextFamily('a','')
+"call s:MapNextFamily('a','')
 call s:MapNextFamily('u','b')
-call s:MapNextFamily('l','l')
+"call s:MapNextFamily('l','l')
 "call s:MapNextFamily('d','t')
 
 function! s:entries(path)
@@ -145,8 +145,8 @@ function! s:MoveVisualMode(count)
     silent! call repeat#set(fullPlugName, a:count)
 endfunction
 
-nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
 nnoremap <silent> <Plug>unimpairedMoveDown :<C-U>call <SID>Move('+',v:count1,'Down')<CR>
+nnoremap <silent> <Plug>unimpairedMoveUp   :<C-U>call <SID>Move('--',v:count1,'Up')<CR>
 
 nnoremap <silent> <Plug>VisualModeUnimpairedMoveUp   :call <SID>MoveVisualMode(v:count1)<CR>
 
@@ -170,28 +170,28 @@ function! s:toggle(op)
 endfunction
 
 function! s:option_map(letter, option)
-  exe 'nnoremap [o'.a:letter.' :set '.a:option.'<CR>'
-  exe 'nnoremap ]o'.a:letter.' :set no'.a:option.'<CR>'
-  exe 'nnoremap vo'.a:letter.' :set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
+  "exe 'nnoremap [o'.a:letter.' :set '.a:option.'<CR>'
+  "exe 'nnoremap ]o'.a:letter.' :set no'.a:option.'<CR>'
+  exe 'nnoremap vm'.a:letter.' :set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
 endfunction
 
 call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
-nnoremap [od :diffthis<CR>
-nnoremap ]od :diffoff<CR>
-nnoremap vod :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
+"nnoremap [od :diffthis<CR>
+"nnoremap ]od :diffoff<CR>
+"nnoremap vmd :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
 call s:option_map('l', 'list')
-nnoremap [on :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '')<CR>number<CR>
-nnoremap ]on :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '')<CR>nonumber<CR>
-nnoremap von :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '').<SID>toggle('number')<CR><CR>
+"nnoremap [on :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '')<CR>number<CR>
+"nnoremap ]on :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '')<CR>nonumber<CR>
+nnoremap vmn :set <C-R>=(exists('+rnu') && &rnu ? 'norelativenumber ' : '').<SID>toggle('number')<CR><CR>
 call s:option_map('r', 'relativenumber')
-"call s:option_map('s', 'spell')
+call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
-nnoremap [ox :set cursorline cursorcolumn<CR>
-nnoremap ]ox :set nocursorline nocursorcolumn<CR>
-nnoremap vox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
+"nnoremap [ox :set cursorline cursorcolumn<CR>
+"nnoremap ]ox :set nocursorline nocursorcolumn<CR>
+nnoremap vmx :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
 
 " }}}1
 
